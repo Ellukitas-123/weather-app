@@ -16,6 +16,7 @@ export function getHourlyForecastChart(forecast: Forecastday[]) {
     yAxis: {
       type: "value",
       show: false,
+      min: "auto",
       axisLine: {
         onZero: false,
         lineStyle: {
@@ -32,32 +33,28 @@ export function getHourlyForecastChart(forecast: Forecastday[]) {
       {
         type: "line",
         lineStyle: {
-          color: "#ffffff",
+          color: "#C2C7CC",
         },
         itemStyle: {
-          color: "#ffffff",
+          color: "#C2C7CC",
         },
-        emphasis: {
-          upperLabel: {
-            show: true,
-            position: "top",
-            formatter: "{d}",
-          },
-          label: {
-            show: true,
-            position: "top",
-            color: "#ffffff",
-            fontSize: 16,
-            formatter: function (d: any) {
-              return d.data + " ºC";
-            },
+        label: {
+          show: true,
+          position: "top",
+          color: "#ffffff",
+          textBorderColor: "#D2D7DD",
+          textBorderWidth: 1,
+          fontSize: 16,
+          distance: 12,
+          formatter: function (d: any) {
+            return d.data + " ºC";
           },
         },
         data: [],
       },
     ],
     grid: {
-      top: 0,
+      top: "32px",
       bottom: 0,
       left: 0,
       right: 0,
@@ -80,8 +77,8 @@ export function getHourlyForecastChart(forecast: Forecastday[]) {
     return forecast[0].hour[hour].temp_c;
   });
 
-  chart.xAxis.data = labels;
-  chart.series[0].data = data;
+  (chart.xAxis as EChartOption.XAxis).data = labels;
+  (chart.series as EChartOption.Series[])[0].data = data;
 
   return chart;
 }
@@ -132,16 +129,6 @@ export function getHourlyConditions(forecast: Forecastday[]) {
   return data;
 }
 
-function getHour(time: string) {
-  if (time.includes("AM")) {
-    return time.replace(" AM", ":00");
-  }
-  const timeStr = time.replace(" PM", ":00");
-  const timeArr = timeStr.split(":");
-  timeArr[0] = (Number.parseInt(timeArr[0]) + 12).toString().padStart(2, "0");
-  return timeArr.join(":");
-}
-
 function dayHoursArray() {
   const hourStart = new Date().getHours();
   const thisDayHours = 24 - hourStart;
@@ -161,4 +148,14 @@ function dayHoursArray() {
     thisDayHours,
     hours,
   };
+}
+
+function getHour(time: string) {
+  if (time.includes("AM")) {
+    return time.replace(" AM", ":00");
+  }
+  const timeStr = time.replace(" PM", ":00");
+  const timeArr = timeStr.split(":");
+  timeArr[0] = (Number.parseInt(timeArr[0]) + 12).toString().padStart(2, "0");
+  return timeArr.join(":");
 }
