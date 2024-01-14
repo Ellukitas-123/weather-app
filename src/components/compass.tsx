@@ -3,6 +3,7 @@ interface Props {
   className?: string;
 }
 
+// Displays compass and direction (angle)
 export default function Compass({ angle = 0, className = "" }: Props) {
   return (
     <div className={"relative " + className}>

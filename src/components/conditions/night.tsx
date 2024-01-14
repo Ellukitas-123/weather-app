@@ -1,13 +1,18 @@
-export default function NightIcon() {
+interface Props {
+  className?: string;
+}
+
+export default function NightIcon({ className }: Props) {
   return (
     <svg
-      className="w-full aspet-square"
+      className={className}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
       x="0px"
       y="0px"
       viewBox="0 0 30 30"
+      fill="#2A0134"
     >
       <path
         d="M7.91,14.48c0-0.96,0.19-1.87,0.56-2.75s0.88-1.63,1.51-2.26c0.63-0.63,1.39-1.14,2.27-1.52c0.88-0.38,1.8-0.57,2.75-0.57

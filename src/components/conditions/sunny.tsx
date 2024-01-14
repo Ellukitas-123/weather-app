@@ -1,7 +1,11 @@
-export default function SunnyIcon() {
+interface Props {
+  className?: string;
+}
+
+export default function SunnyIcon({ className }: Props) {
   return (
     <svg
-      className="w-full aspect-square"
+      className={className}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
