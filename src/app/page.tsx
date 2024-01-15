@@ -13,9 +13,14 @@ import {
 } from "@/utils/hourly-forecast";
 import ConditionsArray from "@/components/conditions-array";
 import MoonPhaseIcon from "@/components/moon-phase-icon";
+import AstroEvents from "@/components/astro-events";
+import { getHourNatural } from "@/utils/time.util";
+import DoubleSelector from "@/components/inputs/double-selector";
 
 export default function Home() {
   const [location, setLocation] = useState("Vitoria-Gasteiz");
+  const [degrees, setDegrees] = useState("c");
+  const [metric, setMetric] = useState("km");
   const { isLoading, isError, forecast } = useForecat(location);
 
   if (isLoading || isError) {
@@ -28,6 +33,26 @@ export default function Home() {
   return (
     <main className="flex max-h-screen flex-col items-center justify-between gap-12 p-12">
       <h2 className="text-3xl text-slate-100">{location}</h2>
+      <div className="options w-3/4 flex flex-row gap-4 justify-start">
+        <DoubleSelector
+          options={[
+            { label: "ºC", value: "c" },
+            { label: "ºF", value: "f" },
+          ]}
+          onChange={(value: string) => {
+            setDegrees(value);
+          }}
+        ></DoubleSelector>
+        <DoubleSelector
+          options={[
+            { label: "Km", value: "km" },
+            { label: "M", value: "m" },
+          ]}
+          onChange={(value: string) => {
+            setMetric(value);
+          }}
+        ></DoubleSelector>
+      </div>
       <Bento cols={6} rows={3} className="w-3/4 h-[900px]">
         <BentoCard cols={2} className="flex flex-col items-center gap-6">
           <ConditionIcon
@@ -81,8 +106,43 @@ export default function Home() {
             {forecast.forecast.forecastday[0].astro.moon_illumination}%
           </span>
         </BentoCard>
-        <BentoCard cols={4} className="flex flex-col items-center gap-6">
-          <span>Amanecer y atardecer</span>
+        <BentoCard
+          cols={4}
+          className="flex flex-col justify-center items-center gap-6"
+        >
+          <AstroEvents
+            className="w-full"
+            sunrise={
+              new Date(
+                forecast.forecast.forecastday[0].date +
+                  "T" +
+                  getHourNatural(forecast.forecast.forecastday[0].astro.sunrise)
+              )
+            }
+            sunset={
+              new Date(
+                forecast.forecast.forecastday[0].date +
+                  "T" +
+                  getHourNatural(forecast.forecast.forecastday[0].astro.sunset)
+              )
+            }
+            moonrise={
+              new Date(
+                forecast.forecast.forecastday[0].date +
+                  "T" +
+                  getHourNatural(
+                    forecast.forecast.forecastday[0].astro.moonrise
+                  )
+              )
+            }
+            moonset={
+              new Date(
+                forecast.forecast.forecastday[1].date +
+                  "T" +
+                  getHourNatural(forecast.forecast.forecastday[1].astro.moonset)
+              )
+            }
+          ></AstroEvents>
         </BentoCard>
       </Bento>
     </main>
