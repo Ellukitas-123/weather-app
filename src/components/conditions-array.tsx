@@ -13,7 +13,6 @@ export default function ConditionsArray({ className, conditions }: Props) {
   return (
     <div className={className}>
       {conditions.map((condition) => {
-        console.log(condition.date);
         return (
           <ConditionIcon
             key={condition.date.toUTCString()}

@@ -1,13 +1,13 @@
-import SunnyIcon from "@/components/conditions/sunny";
-import NightIcon from "@/components/conditions/night";
+import SunnyIcon from "@/components/icons/conditions/sunny";
+import NightIcon from "@/components/icons/conditions/night";
 import { conditions } from "@/hooks/conditions";
-import DayLightRain from "@/components/conditions/day-light-rain";
-import NightLightRain from "@/components/conditions/night-light-rain";
-import DayModerateRainIcon from "@/components/conditions/day-moderate-rain";
-import NightModerateRainIcon from "@/components/conditions/night-moderate-rain";
-import DayCloudyIcon from "@/components/conditions/day-cloudy";
-import NightCloudyIcon from "@/components/conditions/night-cloudy";
-import VeryCloudyIcon from "@/components/conditions/very-cloudy";
+import DayLightRain from "@/components/icons/conditions/day-light-rain";
+import NightLightRain from "@/components/icons/conditions/night-light-rain";
+import DayModerateRainIcon from "@/components/icons/conditions/day-moderate-rain";
+import NightModerateRainIcon from "@/components/icons/conditions/night-moderate-rain";
+import DayCloudyIcon from "@/components/icons/conditions/day-cloudy";
+import NightCloudyIcon from "@/components/icons/conditions/night-cloudy";
+import VeryCloudyIcon from "@/components/icons/conditions/very-cloudy";
 
 interface Props {
   condition: string;

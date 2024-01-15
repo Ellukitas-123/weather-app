@@ -1,5 +1,6 @@
 import { EChartOption } from "echarts";
 import { Forecastday } from "../../types/forecast";
+import { getHourNatural } from "./time.util";
 
 export function getHourlyForecastChart(forecast: Forecastday[]) {
   const chart: EChartOption<EChartOption.Series> = {
@@ -96,10 +97,10 @@ export function getHourlyConditions(forecast: Forecastday[]) {
       const thisDate = new Date(forecast[1].hour[hour].time_epoch * 1000);
 
       const thisDaySunriseDate = new Date(
-        forecast[1].date + "T" + getHour(forecast[1].astro.sunrise)
+        forecast[1].date + "T" + getHourNatural(forecast[1].astro.sunrise)
       );
       const thisDaySunsetDate = new Date(
-        forecast[1].date + "T" + getHour(forecast[1].astro.sunset)
+        forecast[1].date + "T" + getHourNatural(forecast[1].astro.sunset)
       );
 
       // Next day forecast
@@ -112,10 +113,10 @@ export function getHourlyConditions(forecast: Forecastday[]) {
     const thisDate = new Date(forecast[0].hour[hour].time_epoch * 1000);
 
     const thisDaySunriseDate = new Date(
-      forecast[0].date + "T" + getHour(forecast[0].astro.sunrise)
+      forecast[0].date + "T" + getHourNatural(forecast[0].astro.sunrise)
     );
     const thisDaySunsetDate = new Date(
-      forecast[0].date + "T" + getHour(forecast[0].astro.sunset)
+      forecast[0].date + "T" + getHourNatural(forecast[0].astro.sunset)
     );
 
     // Current day forecast
@@ -148,14 +149,4 @@ function dayHoursArray() {
     thisDayHours,
     hours,
   };
-}
-
-function getHour(time: string) {
-  if (time.includes("AM")) {
-    return time.replace(" AM", ":00");
-  }
-  const timeStr = time.replace(" PM", ":00");
-  const timeArr = timeStr.split(":");
-  timeArr[0] = (Number.parseInt(timeArr[0]) + 12).toString().padStart(2, "0");
-  return timeArr.join(":");
 }
