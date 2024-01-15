@@ -63,7 +63,7 @@ export interface Astro {
   sunset: string;
   moonrise: string;
   moonset: string;
-  moon_phase: string;
+  moon_phase: MoonPhases;
   moon_illumination: number;
   is_moon_up: number;
   is_sun_up: number;
@@ -138,4 +138,15 @@ export interface Location {
   tz_id: string;
   localtime_epoch: number;
   localtime: string;
+}
+
+export enum MoonPhases {
+  NewMoon = "New Moon",
+  WaxingCrescent = "Waxing Crescent",
+  FirstQuarter = "First Quarter",
+  WaxingGibbous = "Waxing Gibbous",
+  FullMoon = "Full Moon",
+  WaningGibbous = "Waning Gibbous",
+  ThirdQuarter = "Third Quarter",
+  WaningCrescent = "Waning Crescent",
 }

@@ -12,9 +12,10 @@ import {
   getHourlyConditions,
 } from "@/utils/hourly-forecast";
 import ConditionsArray from "@/components/conditions-array";
+import MoonPhaseIcon from "@/components/moon-phase-icon";
 
 export default function Home() {
-  const [location, setLocation] = useState("Cartagena, murcia, españa");
+  const [location, setLocation] = useState("Vitoria-Gasteiz");
   const { isLoading, isError, forecast } = useForecat(location);
 
   if (isLoading || isError) {
@@ -40,9 +41,9 @@ export default function Home() {
         </BentoCard>
         <BentoCard cols={4} className="flex flex-col items-center gap-6">
           <div className="forecast w-full h-full overflow-x-scroll">
-            <div className="w-[300%] h-full">
+            <div className="w-[1750px] h-full">
               <ConditionsArray
-                className="w-full h-1/5 flex flex-row justify-between pl-7 pr-2"
+                className="w-full h-1/5 flex flex-row justify-between pl-7 pr-4"
                 conditions={hourlyConditions}
               ></ConditionsArray>
               <ReactECharts
@@ -64,8 +65,21 @@ export default function Home() {
             angle={forecast.current.wind_degree}
           ></Compass>
         </BentoCard>
-        <BentoCard cols={2} className="flex flex-col items-center gap-6">
-          <span>Fase lunar</span>
+        <BentoCard
+          cols={2}
+          className="flex flex-col items-center justify-between gap-2"
+        >
+          <MoonPhaseIcon
+            className="basis-0 shrink grow min-h-0"
+            phase={forecast.forecast.forecastday[0].astro.moon_phase}
+            ilumination={
+              forecast.forecast.forecastday[0].astro.moon_illumination
+            }
+          ></MoonPhaseIcon>
+          <span className="text-lg text-white">
+            Iluminación:{" "}
+            {forecast.forecast.forecastday[0].astro.moon_illumination}%
+          </span>
         </BentoCard>
         <BentoCard cols={4} className="flex flex-col items-center gap-6">
           <span>Amanecer y atardecer</span>
