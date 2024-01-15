@@ -1,5 +1,5 @@
 "use client";
-
+// TODO: Server side rendering (if doubts use Github copilot ;) )
 import Bento from "@/components/bento/bento";
 import BentoCard from "@/components/bento/bento-card";
 import ReactECharts from "@/components/chart";
@@ -61,7 +61,11 @@ export default function Home() {
             is_day={forecast.current.is_day === 1 ? true : false}
           ></ConditionIcon>
           <span className="text-4xl text-white">
-            {forecast.current.temp_c} <sup>º</sup>C
+            {degrees === "f"
+              ? forecast.current.temp_f
+              : forecast.current.temp_c}{" "}
+            <sup>º</sup>
+            {degrees === "f" ? "F" : "C"}
           </span>
         </BentoCard>
         <BentoCard cols={4} className="flex flex-col items-center gap-6">

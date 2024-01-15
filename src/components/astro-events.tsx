@@ -19,46 +19,44 @@ export default function AstroEvents({
 }: Props) {
   const pathContainer = useRef<SVGElement>();
   const path = useRef<SVGPathElement>();
-  const sun = useRef<SVGPathElement>();
-
-  const position = () => {
-    if (
-      sun.current === undefined ||
-      path.current === undefined ||
-      pathContainer.current === undefined
-    )
-      return;
-
-    const now = new Date();
-
-    if (now < sunrise || now > sunset) {
-      sun.current.style.visibility = "hidden";
-      return;
-    }
-
-    // Calculate progress and position
-    const totalTime = sunset.getTime() - sunrise.getTime();
-    const currentTime = now.getTime() - sunrise.getTime();
-    const percent = currentTime / totalTime;
-    const offset = percent * path.current?.getTotalLength();
-    const point = path.current?.getPointAtLength(offset);
-
-    // Set it in %
-    const viewBox = pathContainer.current.getAttribute("viewBox")?.split(" ");
-    const width = viewBox ? parseFloat(viewBox[2]) : 0;
-    const height = viewBox ? parseFloat(viewBox[3]) : 0;
-
-    const relativeX = 100 - (point.x / width) * 100;
-    const relativeY = (point.y / height) * 100;
-
-    // Set position
-    sun.current.style.visibility = "visible";
-    sun.current.style.left = `${relativeX}%`;
-    sun.current.style.top = `${relativeY}%`;
-  };
+  const sun = useRef<SVGElement>();
 
   useEffect(() => {
-    setInterval(() => position(), 1000);
+    setInterval(() => {
+      if (
+        sun.current === undefined ||
+        path.current === undefined ||
+        pathContainer.current === undefined
+      )
+        return;
+
+      const now = new Date();
+
+      if (now < sunrise || now > sunset) {
+        sun.current.style.visibility = "hidden";
+        return;
+      }
+
+      // Calculate progress and position
+      const totalTime = sunset.getTime() - sunrise.getTime();
+      const currentTime = now.getTime() - sunrise.getTime();
+      const percent = currentTime / totalTime;
+      const offset = percent * path.current?.getTotalLength();
+      const point = path.current?.getPointAtLength(offset);
+
+      // Set it in %
+      const viewBox = pathContainer.current.getAttribute("viewBox")?.split(" ");
+      const width = viewBox ? parseFloat(viewBox[2]) : 0;
+      const height = viewBox ? parseFloat(viewBox[3]) : 0;
+
+      const relativeX = 100 - (point.x / width) * 100;
+      const relativeY = (point.y / height) * 100;
+
+      // Set position
+      sun.current.style.visibility = "visible";
+      sun.current.style.left = `${relativeX}%`;
+      sun.current.style.top = `${relativeY}%`;
+    }, 1000);
   }, [sunrise, sunset]);
 
   return (
@@ -66,13 +64,13 @@ export default function AstroEvents({
       <div className="graphic relative w-full h-full">
         <svg
           className="w-full"
-          ref={pathContainer}
+          ref={pathContainer as LegacyRef<SVGSVGElement>}
           version="1.1"
           viewBox="0 0 270.93 67.733"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            ref={path}
+            ref={path as LegacyRef<SVGPathElement>}
             id="astro-events-path"
             d="m270.93 67.733c-19.684-39.757-74.204-66.504-135.47-66.508-61.148 0.094829-115.6 26.825-135.24 66.508"
             fillOpacity="0"
@@ -84,7 +82,7 @@ export default function AstroEvents({
           />
         </svg>
         <svg
-          ref={sun}
+          ref={sun as LegacyRef<SVGSVGElement>}
           className="absolute size-16 -translate-x-1/2 -translate-y-1/2"
           version="1.1"
           id="Layer_1"

@@ -24,10 +24,10 @@ export default function DoubleSelector({ options, onChange }: Props) {
           value === 0 ? "left-1" : "right-1"
         } h-9 aspect-square bg-slate-100/30 rounded transition duration-1000`}
       ></div>
-      <div className="roption-0 z-10 flex flex-row items-center justify-center aspect-square p-1 text-xl">
+      <div className="roption-0 z-10 flex flex-row items-center justify-center size-9 p-1 text-xl text-center">
         <span>{options[0].label}</span>
       </div>
-      <div className="option-1 z-10 flex flex-row items-center justify-center aspect-square p-1 text-xl">
+      <div className="option-1 z-10 flex flex-row items-center justify-center size-9 p-1 text-xl text-center">
         <span>{options[1].label}</span>
       </div>
     </div>
