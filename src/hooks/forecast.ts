@@ -11,7 +11,7 @@ export function useForecat(place: string) {
     queryKey: ["forecast", place],
     queryFn: async () => {
       return await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${process.env.WEATHER_API_KEY}&q=${place}&days=3`
+        `https://api.weatherapi.com/v1/forecast.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${place}&days=3`
       ).then(async (res) => {
         if (!res.ok) {
           console.log(res);

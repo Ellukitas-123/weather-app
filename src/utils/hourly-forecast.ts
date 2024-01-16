@@ -2,7 +2,10 @@ import { EChartOption } from "echarts";
 import { Forecastday } from "../../types/forecast";
 import { getHourNatural } from "./time.util";
 
-export function getHourlyForecastChart(forecast: Forecastday[]) {
+export function getHourlyForecastChart(
+  forecast: Forecastday[],
+  degrees: "c" | "f"
+) {
   const chart: EChartOption<EChartOption.Series> = {
     xAxis: {
       type: "category",
@@ -48,7 +51,7 @@ export function getHourlyForecastChart(forecast: Forecastday[]) {
           fontSize: 16,
           distance: 12,
           formatter: function (d: any) {
-            return d.data + " ºC";
+            return d.data + " º" + degrees.toUpperCase();
           },
         },
         data: [],
@@ -71,11 +74,15 @@ export function getHourlyForecastChart(forecast: Forecastday[]) {
   const data = hoursArr.hours.map((hour, i) => {
     if (i > hoursArr.thisDayHours - 1) {
       // Next day forecast
-      return forecast[1].hour[hour].temp_c;
+      return degrees === "f"
+        ? forecast[1].hour[hour].temp_f
+        : forecast[1].hour[hour].temp_c;
     }
 
     // Current day forecast
-    return forecast[0].hour[hour].temp_c;
+    return degrees === "f"
+      ? forecast[0].hour[hour].temp_f
+      : forecast[0].hour[hour].temp_c;
   });
 
   (chart.xAxis as EChartOption.XAxis).data = labels;

@@ -19,7 +19,7 @@ import DoubleSelector from "@/components/inputs/double-selector";
 
 export default function Home() {
   const [location, setLocation] = useState("Vitoria-Gasteiz");
-  const [degrees, setDegrees] = useState("c");
+  const [degrees, setDegrees] = useState<"c" | "f">("c");
   const [metric, setMetric] = useState("km");
   const { isLoading, isError, forecast } = useForecat(location);
 
@@ -28,7 +28,10 @@ export default function Home() {
   }
 
   const condition = `${forecast.current.condition.code}`;
-  const hourlyChart = getHourlyForecastChart(forecast.forecast.forecastday);
+  const hourlyChart = getHourlyForecastChart(
+    forecast.forecast.forecastday,
+    degrees
+  );
   const hourlyConditions = getHourlyConditions(forecast.forecast.forecastday);
   return (
     <main className="flex max-h-screen flex-col items-center justify-between gap-12 p-12">
@@ -40,7 +43,7 @@ export default function Home() {
             { label: "ºF", value: "f" },
           ]}
           onChange={(value: string) => {
-            setDegrees(value);
+            setDegrees(value as "c" | "f");
           }}
         ></DoubleSelector>
         <DoubleSelector
