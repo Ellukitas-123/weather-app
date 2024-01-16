@@ -42,9 +42,13 @@ export function getHourlyForecastChart(
         itemStyle: {
           color: "#C2C7CC",
         },
+        symbol: "image:///conditions/wi-day-sunny.svg",
+        symbolSize: 48,
+        symbolPosition: "top",
+        symbolOffset: [0, -80],
         label: {
           show: true,
-          position: "top",
+          position: "bottom",
           color: "#ffffff",
           textBorderColor: "#D2D7DD",
           textBorderWidth: 1,
@@ -58,7 +62,7 @@ export function getHourlyForecastChart(
       },
     ],
     grid: {
-      top: "32px",
+      top: "96px",
       bottom: 0,
       left: 0,
       right: 0,

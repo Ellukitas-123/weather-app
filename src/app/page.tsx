@@ -11,7 +11,6 @@ import {
   getHourlyForecastChart,
   getHourlyConditions,
 } from "@/utils/hourly-forecast";
-import ConditionsArray from "@/components/conditions-array";
 import MoonPhaseIcon from "@/components/moon-phase-icon";
 import AstroEvents from "@/components/astro-events";
 import { getHourNatural } from "@/utils/time.util";
@@ -52,7 +51,7 @@ export default function Home() {
             { label: "M", value: "m" },
           ]}
           onChange={(value: string) => {
-            setMetric(value);
+            setMetric(value as "km" | "m");
           }}
         ></DoubleSelector>
       </div>
@@ -74,13 +73,9 @@ export default function Home() {
         <BentoCard cols={4} className="flex flex-col items-center gap-6">
           <div className="forecast w-full h-full overflow-x-scroll">
             <div className="w-[1750px] h-full">
-              <ConditionsArray
-                className="w-full h-1/5 flex flex-row justify-between pl-7 pr-4"
-                conditions={hourlyConditions}
-              ></ConditionsArray>
               <ReactECharts
                 option={hourlyChart}
-                style={{ width: "100%", height: "80%" }}
+                style={{ width: "100%", height: "100%" }}
               ></ReactECharts>
             </div>
           </div>
@@ -91,11 +86,21 @@ export default function Home() {
         <BentoCard cols={1} className="flex flex-col items-center gap-6">
           <span>Presión</span>
         </BentoCard>
-        <BentoCard cols={2} className="flex flex-col items-center gap-6">
+        <BentoCard
+          cols={2}
+          className="flex flex-col items-center justify-between gap-2"
+        >
           <Compass
-            className="w-full h-full"
+            className="basis-0 shrink grow min-h-0"
             angle={forecast.current.wind_degree}
           ></Compass>
+          <span className="text-lg text-white">
+            Velocidad:{" "}
+            {metric === "m"
+              ? forecast.current.wind_mph
+              : forecast.current.wind_kph}{" "}
+            {metric === "m" ? "mph" : "km/h"}
+          </span>
         </BentoCard>
         <BentoCard
           cols={2}
